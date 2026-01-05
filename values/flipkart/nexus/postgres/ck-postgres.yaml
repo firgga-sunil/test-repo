@@ -9,7 +9,7 @@ spec:
   teamId: flipkart
   numberOfInstances: 2
   standby:
-    wal_gs_path: "ck-flipkart-pg-storage-bucket"
+    s3_wal_path: "ck-flipkart-pg-storage-bucket"
   imagePullSecrets:
     - name: ckn-ghcr-secret
   serviceAccountName: postgres-pod
