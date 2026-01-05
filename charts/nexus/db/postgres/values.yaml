@@ -1,0 +1,60 @@
+
+image:
+  repository: ghcr.io/ckgitrepouser/prod/ck-nexus/bitnamilegacy/postgresql
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: 
+- name: ckn-ghcr-secret
+
+credentials:
+  username: cknexus
+  password: cknexus
+  database: ckservicedb
+  replica_user_password: cknexus
+
+postgresql:
+  replication:
+    enabled: true
+    user: replication_user
+
+
+service:
+  port: 5432
+
+objectStorage:
+  provider: gcp
+  bucket: ck-flipkart-pg-storage-bucket
+  prefix: prod/daily
+
+gcp:
+  serviceAccount: codekarma-dev-node-sa@ck-flipkart-pg.iam.gserviceaccount.com
+schedule: "*/1 * * * *" # Every 1 hour
+
+persistence:
+  enabled: true
+  storageClass: "standard"
+  size: 8Gi
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "512m"
+  limits:
+    memory: "1024Mi"
+    cpu: "1024m" 
+
+# Add init scripts configuration
+initScripts:
+  enabled: true
+  scripts:
+    - name: "01-init.sql"
+      path: "init/01-init.sql"
+
+# Node affinity configuration (disabled by default)
+nodeAffinity:
+  enabled: false
+  nodeType: ""
+
+# Tolerations (empty by default)
+tolerations: []
