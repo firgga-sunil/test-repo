@@ -1,0 +1,87 @@
+# Default values for kube-prometheus-stack - GCP Configuration
+nameOverride: "ck"
+fullnameOverride: "ck"
+
+prometheusOperator:
+  enabled: true
+  # Configure prometheus-operator image using GHCR (mirrored from quay.io)
+  # Image is mirrored from quay.io to GHCR to avoid timeout issues
+  image:
+    registry: ghcr.io
+    repository: ckgitrepouser/codekarma/infra/prometheus-operator
+    tag: v0.86.2
+    pullPolicy: IfNotPresent
+
+prometheus:
+  enabled: true
+  fullnameOverride: "ck"
+  prometheusSpec:
+    maximumStartupDurationSeconds: 60
+    podMonitorSelector: {}
+    probeSelector: {}
+    retention: 30d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: pd-ssd
+          accessModes: [ "ReadWriteOnce" ]
+          resources:
+            requests:
+              storage: 8Gi
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "1000m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+    # GCP-specific tolerations for GKE nodes
+    #    tolerations:
+    #      - key: "nodetype"
+    #        operator: "Equal"
+    #        value: "db-monitoring-node"
+    #        effect: "NoSchedule"
+    # Add node affinity to ensure proper scheduling
+    securityContext:
+      fsGroup: 2000
+      runAsNonRoot: true
+      runAsUser: 1000
+    # Enable the Admin API
+    enableAdminAPI: true
+
+# Disable other components
+
+kubeApiServer:
+  enabled: false
+prometheus-node-exporter:
+  enabled: false
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false
+nodeExporter:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubelet:
+  serviceMonitor:
+    enabled: false
+  service:
+    enabled: false
+
+# Disable default ServiceMonitors
+defaultRules:
+  create: false
+
+# Disable additional ServiceMonitors
+additionalServiceMonitors: []
