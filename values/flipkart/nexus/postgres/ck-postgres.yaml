@@ -13,8 +13,6 @@ spec:
       value: "true"
     - name: STANDBY_USE_WALG_RESTORE
       value: "true"
-    - name: WALG_GS_PREFIX
-      value: "gs://ck-flipkart-pg-storage-bucket/spilo/ck-postgres/a0709f4d-1661-4f0f-aa89-72a20a2cbf5c/"
   standby:
     s3_wal_path: "gs://ck-flipkart-pg-storage-bucket/spilo/ck-postgres/a0709f4d-1661-4f0f-aa89-72a20a2cbf5c/"
   imagePullSecrets:
