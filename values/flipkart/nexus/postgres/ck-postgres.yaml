@@ -18,14 +18,14 @@ spec:
     
     # 1. Point the Prefix exactly to where basebackups_005 lives
     # NOTICE THE DOUBLE SLASH (//) AND THE "wal/15/" AT THE END
-    - name: STANDBY_WALE_GS_PREFIX
-      value: "gs://ck-flipkart-pg-storage-bucket//test/spilo/ck-postgres/4b1f7ece-f375-4718-9a3b-e89c73d2a4f3/wal/15/"
-    - name: STANDBY_WALG_GS_PREFIX
-      value: "gs://ck-flipkart-pg-storage-bucket//test/spilo/ck-postgres/4b1f7ece-f375-4718-9a3b-e89c73d2a4f3/wal/15/"
+    # - name: STANDBY_WALE_GS_PREFIX
+    #   value: "gs://ck-flipkart-pg-storage-bucket//test/spilo/ck-postgres/4b1f7ece-f375-4718-9a3b-e89c73d2a4f3/wal/15/"
+    # - name: STANDBY_WALG_GS_PREFIX
+    #   value: "gs://ck-flipkart-pg-storage-bucket//test/spilo/ck-postgres/4b1f7ece-f375-4718-9a3b-e89c73d2a4f3/wal/15/"
 
   standby:
     # 2. Match the s3_wal_path to the same location
-    s3_wal_path: "gs://ck-flipkart-pg-storage-bucket//test/spilo/ck-postgres/4b1f7ece-f375-4718-9a3b-e89c73d2a4f3/wal/15"
+    s3_wal_path: "gs://ck-flipkart-pg-storage-bucket/clean-restore"
   imagePullSecrets:
     - name: ckn-ghcr-secret
   serviceAccountName: postgres-pod
