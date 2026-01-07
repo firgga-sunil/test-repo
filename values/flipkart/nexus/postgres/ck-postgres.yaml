@@ -9,7 +9,7 @@ spec:
   teamId: flipkart
   numberOfInstances: 2
   standby:
-    gs_wal_path: "gs://ck-flipkart-pg-storage-bucket/test/spilo/ck-postgres/36b4af00-032c-419a-8ca3-4eae66f30b60/wal/15"
+    gs_wal_path: "gs://ck-flipkart-pg-storage-bucket/test//spilo/ck-postgres/36b4af00-032c-419a-8ca3-4eae66f30b60/wal/15"
 
   imagePullSecrets:
     - name: ckn-ghcr-secret
