@@ -4,6 +4,6 @@ metadata:
   name: google-storage-bucket
 spec:
   configuration:
-    destinationPath: "gs://ck-flipkart-pg-storage-bucket/codekarma/ck-postgres"
+    destinationPath: "gs://ck-flipkart-pg-storage-bucket-2/codekarma/ck-postgres"
     googleCredentials:
       gkeEnvironment: true

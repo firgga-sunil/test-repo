@@ -1,55 +1,55 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: ck-postgres
-  namespace: codekarma
-spec:
-  instances: 3
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Cluster
+# metadata:
+#   name: ck-postgres
+#   namespace: codekarma
+# spec:
+#   instances: 3
 
-  imageName: ghcr.io/ckgitrepouser/prod/cloudnative-pg/postgresql:16.2
-  imagePullSecrets:
-    - name: ckn-ghcr-secret
-  serviceAccountTemplate:
-    metadata:
-      annotations:
-        iam.gke.io/gcp-service-account: codekarma-dev-node-sa@ck-flipkart-pg.iam.gserviceaccount.com
+#   imageName: ghcr.io/ckgitrepouser/prod/cloudnative-pg/postgresql:16.2
+#   imagePullSecrets:
+#     - name: ckn-ghcr-secret
+#   serviceAccountTemplate:
+#     metadata:
+#       annotations:
+#         iam.gke.io/gcp-service-account: codekarma-dev-node-sa@ck-flipkart-pg.iam.gserviceaccount.com
   
-  plugins:
-    - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: true
-      parameters:
-        barmanObjectName: google-storage-bucket
+#   plugins:
+#     - name: barman-cloud.cloudnative-pg.io
+#       isWALArchiver: true
+#       parameters:
+#         barmanObjectName: google-storage-bucket
 
-  storage:
-    size: 20Gi
-    storageClass: standard
+#   storage:
+#     size: 20Gi
+#     storageClass: standard
 
-  bootstrap:
-    initdb:
-      database: ckservicedb
+#   bootstrap:
+#     initdb:
+#       database: ckservicedb
       
-      owner: cknexus
-      secret:
-        name: postgres-secret
-      postInitApplicationSQLRefs:
-        configMapRefs:
-          - name: ck-postgres-init-sql
-            key: init.sql
-  managed:
-    roles:
-    - name: cknexus
-      ensure: present
-      login: true
-      superuser: true 
-      passwordSecret:
-        name: postgres-secret
-  resources:
-    requests:
-      cpu: "500m"
-      memory: "1Gi"
-    limits:
-      cpu: "1"
-      memory: "2Gi"
+#       owner: cknexus
+#       secret:
+#         name: postgres-secret
+#       postInitApplicationSQLRefs:
+#         configMapRefs:
+#           - name: ck-postgres-init-sql
+#             key: init.sql
+#   managed:
+#     roles:
+#     - name: cknexus
+#       ensure: present
+#       login: true
+#       superuser: true 
+#       passwordSecret:
+#         name: postgres-secret
+#   resources:
+#     requests:
+#       cpu: "500m"
+#       memory: "1Gi"
+#     limits:
+#       cpu: "1"
+#       memory: "2Gi"
 
-  monitoring:
-    enablePodMonitor: false
+#   monitoring:
+#     enablePodMonitor: false

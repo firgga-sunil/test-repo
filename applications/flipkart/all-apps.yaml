@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/compute-classes"
   destination:
@@ -31,7 +31,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/gcp-gateway"
     helm:
@@ -58,7 +58,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/ck-graph-mcp-server"
     helm:
@@ -84,7 +84,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/ck-mcp"
     helm:
@@ -110,7 +110,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/karma-lens"
     helm:
@@ -137,7 +137,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/firgga-sunil/ck-flipkart-helm-charts.git
+    repoURL: https://github.com/firgga-sunil/test-repo.git
     targetRevision: main
     path: "./charts/nexus/cloudnativepg"
     helm:
@@ -169,7 +169,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/firgga-sunil/ck-flipkart-helm-charts.git
+    repoURL: https://github.com/firgga-sunil/test-repo.git
     targetRevision: main
     path: "./values/flipkart/nexus/cloudnativepg"
 
@@ -193,7 +193,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/nexus/prometheus"
     helm:
@@ -220,7 +220,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/nexus/ck-nexus-charts"
     helm:
@@ -246,7 +246,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/ck-intel-collector"
     helm:
@@ -272,7 +272,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    repoURL: "https://github.com/firgga-sunil/test-repo.git"
     targetRevision: main
     path: "./charts/nginx"
     helm:
