@@ -1,0 +1,12 @@
+apiVersion: cloud.google.com/v1
+kind: ComputeClass
+metadata:
+  name: cpu-heavy
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  priorities:
+  - machineFamily: n2d
+  - machineFamily: n2
+  nodePoolAutoCreation:
+    enabled: true

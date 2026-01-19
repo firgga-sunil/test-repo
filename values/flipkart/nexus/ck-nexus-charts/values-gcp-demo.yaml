@@ -22,7 +22,8 @@ imagePullSecrets:
 # Node affinity configuration for n2d node type
 nodeAffinity:
   enabled: false
-  nodeType: "n2d"
+  machineFamily: cloud.google.com/compute-class
+  nodeType: cpu-heavy
 
 tolerations:
 - key: "CriticalAddonsOnly"

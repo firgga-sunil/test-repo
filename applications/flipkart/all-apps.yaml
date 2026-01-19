@@ -1,14 +1,37 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gcp-gateway
+  name: computeclasses
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
+    targetRevision: main
+    path: "./charts/compute-classes"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gcp-gateway
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/gcp-gateway"
     helm:
@@ -23,6 +46,7 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+    - PruneLast=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -34,7 +58,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/ck-graph-mcp-server"
     helm:
@@ -60,7 +84,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/ck-mcp"
     helm:
@@ -86,7 +110,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/karma-lens"
     helm:
@@ -105,29 +129,35 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgres-operator
+  name: cloudnativepg-operator
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
+
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: https://github.com/firgga-sunil/ck-flipkart-helm-charts.git
     targetRevision: main
-    path: "./charts/nexus/postgres-operator"
+    path: "./charts/nexus/cloudnativepg"
     helm:
-      valueFiles:
-        - values.yaml
+      releaseName: cloudnativepg
+      values: |
+        crds:
+          create: true
+
   destination:
     server: https://kubernetes.default.svc
     namespace: postgres-operator
+
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
---- 
+    - CreateNamespace=true
+    - ServerSideApply=true
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -135,27 +165,23 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-
 spec:
   project: default
 
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: https://github.com/firgga-sunil/ck-flipkart-helm-charts.git
     targetRevision: main
-    path: values/flipkart/nexus/postgres
-    directory:
-      recurse: true
+    path: "./values/flipkart/nexus/cloudnativepg"
 
   destination:
     server: https://kubernetes.default.svc
     namespace: codekarma
-
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
 ---
+AWSTemplateFormatVersion: "2010-09-09"
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -167,7 +193,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/nexus/prometheus"
     helm:
@@ -194,7 +220,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/nexus/ck-nexus-charts"
     helm:
@@ -220,7 +246,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/ck-intel-collector"
     helm:
@@ -246,7 +272,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/firgga-sunil/test-repo.git"
+    repoURL: "https://github.com/firgga-sunil/ck-flipkart-helm-charts.git"
     targetRevision: main
     path: "./charts/nginx"
     helm:
@@ -261,4 +287,3 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-

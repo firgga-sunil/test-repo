@@ -1,0 +1,15 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: ck-postgres-daily-backup
+  namespace: codekarma
+spec:
+  schedule: "0 */12 * * *"   # every 12 hours
+  backupOwnerReference: self
+  cluster:
+    name: ck-postgres
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+    parameters:
+      barmanObjectName: google-storage-bucket

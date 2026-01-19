@@ -1,0 +1,50 @@
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Cluster
+# metadata:
+#   name: ck-postgres-standby
+#   namespace: codekarma
+#   annotations:
+#     cnpg.io/skipEmptyWalArchiveCheck: "enabled"
+# spec:
+#   instances: 1
+#   imageName: ghcr.io/ckgitrepouser/prod/cloudnative-pg/postgresql:16.2
+#   imagePullSecrets:
+#     - name: ckn-ghcr-secret
+
+#   # Attach the plugin to the standby cluster
+#   plugins:
+#     - name: barman-cloud.cloudnative-pg.io
+#       parameters:
+#         # This refers to the ObjectStore CRD we created earlier
+#         barmanObjectName: google-storage-bucket
+
+#   externalClusters:
+#     - name: ck-postgres
+#       plugin:
+#         name: barman-cloud.cloudnative-pg.io
+#         parameters:
+#           barmanObjectName: google-storage-bucket
+#           # IMPORTANT: This must match the metadata.name of your PRIMARY cluster
+#           serverName: ck-postgres 
+
+#   bootstrap:
+#     recovery:
+#       source: ck-postgres
+
+#   # Keep your existing storage/resource/SA config below...
+#   serviceAccountTemplate:
+#     metadata:
+#       annotations:
+#         iam.gke.io/gcp-service-account: codekarma-dev-node-sa@ck-flipkart-pg.iam.gserviceaccount.com
+
+#   storage:
+#     size: 20Gi
+#     storageClass: standard-rwo
+
+#   resources:
+#     requests:
+#       cpu: "500m"
+#       memory: "1Gi"
+#     limits:
+#       cpu: "1"
+#       memory: "2Gi"

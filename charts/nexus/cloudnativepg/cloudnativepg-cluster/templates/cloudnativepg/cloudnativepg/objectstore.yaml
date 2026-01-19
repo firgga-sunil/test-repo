@@ -1,0 +1,9 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: google-storage-bucket
+spec:
+  configuration:
+    destinationPath: "gs://ck-flipkart-pg-storage-bucket/codekarma/ck-postgres"
+    googleCredentials:
+      gkeEnvironment: true

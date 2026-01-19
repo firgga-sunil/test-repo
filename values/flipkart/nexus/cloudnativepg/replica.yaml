@@ -1,0 +1,53 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ck-postgres-replica
+  namespace: codekarma
+spec:
+  instances: 1
+
+  imageName: ghcr.io/ckgitrepouser/prod/cloudnative-pg/postgresql:16.2
+  imagePullSecrets:
+    - name: ckn-ghcr-secret
+
+  serviceAccountTemplate:
+    metadata:
+      annotations:
+        iam.gke.io/gcp-service-account: codekarma-dev-node-sa@ck-flipkart-pg.iam.gserviceaccount.com
+
+  storage:
+    size: 20Gi
+    storageClass: standard-rwo
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "2Gi"
+
+  bootstrap:
+    pg_basebackup:
+      source: ck-postgres
+
+  replica:
+    enabled: true
+    source: ck-postgres
+
+  externalClusters:
+    - name: ck-postgres
+      connectionParameters:
+        host: ck-postgres-rw.codekarma.svc.cluster.local
+        user: streaming_replica
+        dbname: ckservicedb
+        sslmode: verify-full
+      sslKey:
+        name: ck-postgres-replication
+        key: tls.key
+      sslCert:
+        name: ck-postgres-replication
+        key: tls.crt
+      sslRootCert:
+        name: ck-postgres-ca
+        key: ca.crt
